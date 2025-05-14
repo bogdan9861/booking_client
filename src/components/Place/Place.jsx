@@ -65,7 +65,6 @@ const Place = ({ place, places, setPlaces, footerShown, user }) => {
       style={{
         paddingTop: user?.role === "ADMIN" ? "20px" : "0px",
       }}
-      onClick={setRoute}
     >
       {user?.role === "ADMIN" && (
         <Popconfirm
@@ -94,7 +93,9 @@ const Place = ({ place, places, setPlaces, footerShown, user }) => {
           src="https://img.icons8.com/?size=100&id=7880&format=png&color=3DAF26"
           alt=""
         />
-        <span className="main__card-location">{place.location}</span>
+        <span className="main__card-location" onClick={setRoute}>
+          {place.location}
+        </span>
       </div>
       <div className="main__card-inner">
         {footerShown ? (

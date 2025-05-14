@@ -1,6 +1,9 @@
 .counter {
   // .counter__inner
 
+  position: relative;
+  z-index: 9999;
+
   &__inner {
     display: flex;
     align-items: center;
