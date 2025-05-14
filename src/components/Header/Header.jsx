@@ -5,21 +5,8 @@ import "./Header.scss";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import service from "../../api/service";
 
-const Header = () => {
-  const { current } = service();
+const Header = ({ user }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    current()
-      .then((res) => {
-        setUser(res.data.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, []);
 
   return (
     <header className="header">
@@ -27,7 +14,7 @@ const Header = () => {
         <Input.Search
           className="header__search"
           placeholder="Поиск по адресу..."
-          onSearch={(text) => setSearchParams(`?location=${text}`)}
+          onSearch={(text) => setSearchParams(`location=${text}`)}
         />
         <Link className="header__profile-link" to={"/profile"}>
           <img

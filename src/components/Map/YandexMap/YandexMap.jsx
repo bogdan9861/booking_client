@@ -38,10 +38,6 @@ const YandexMap = ({ places }) => {
   }, []);
 
   useEffect(() => {
-    console.log(userCoords);
-  }, [userCoords]);
-
-  useEffect(() => {
     const geocodeAddresses = async () => {
       const geocodedCoords = [];
 
@@ -98,15 +94,38 @@ const YandexMap = ({ places }) => {
       window.ymaps.route([userCoords, destination]).then(
         (route) => {
           route.getPaths().options.set({
-            strokeColor: "#0000FF",
-            opacity: 0.9,
-            strokeWidth: 4,
+            strokeColor: "#4c72ed",
+            strokeWidth: 3,
+          });
+
+          const wayPoints = route.getWayPoints();
+
+          wayPoints.each(function (wayPoint, i) {
+            if (i === 0) {
+              wayPoint.options.set({
+                iconLayout: "default#image",
+                iconImageHref: "",
+                iconImageSize: [32, 32],
+                iconImageOffset: [-16, -16],
+              });
+            } else if (i === 1) {
+              wayPoint.options.set({
+                iconLayout: "default#image",
+                iconImageHref: "",
+                iconImageSize: [46, 54],
+                iconImageOffset: [-16, -16],
+              });
+            }
           });
 
           mapInstance.geoObjects.add(route);
           routeRef.current = route;
 
-          mapInstance.setBounds(route.getBounds(), { checkZoomRange: true });
+          const bounds = route.getBounds();
+          mapInstance.setBounds(bounds, {
+            zoomMargin: 20,
+            duration: 500,
+          });
         },
         (error) => {
           console.error("Ошибка при построении маршрута:", error);
@@ -120,12 +139,21 @@ const YandexMap = ({ places }) => {
       {contextHolder}
       <Ymap
         instanceRef={mapRef}
-        defaultState={{ center: [55.75, 37.57], zoom: 5 }}
+        defaultState={{ center: userCoords || [55.75, 37.57], zoom: 10 }}
         width="100%"
         height="500px"
       >
         {coords.map((coord, index) => (
-          <Placemark key={index} geometry={coord} />
+          <Placemark
+            key={index}
+            geometry={coord}
+            options={{
+              iconImageHref: "https://i.ibb.co/XZW28D7b/Price-for-zones.png",
+              iconLayout: "default#image",
+              iconImageSize: [37, 42],
+              iconImageOffset: [-16, -16],
+            }}
+          />
         ))}
         {userCoords && <Placemark geometry={userCoords} />}
       </Ymap>

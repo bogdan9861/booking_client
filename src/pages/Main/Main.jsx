@@ -11,9 +11,10 @@ import "./Main.scss";
 
 const Main = () => {
   const navigate = useNavigate();
-  const { getAllPlaces } = service();
+  const { getAllPlaces, current } = service();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const [user, setUser] = useState(null);
   const [places, setPlaces] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -34,15 +35,26 @@ const Main = () => {
       });
   }, [searchParams.get("location")]);
 
+  useEffect(() => {
+    current()
+      .then((res) => {
+        setUser(res.data.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
   return (
     <>
-      <Header />
+      <Header user={user} />
       <div className="main">
         <Map places={places} />
         <div className="main__inner">
           {!loading ? (
             places.map((el) => (
               <Place
+                user={user}
                 places={places}
                 setPlaces={setPlaces}
                 place={el}
@@ -63,7 +75,7 @@ const Main = () => {
             }}
           >
             {places.length === 0 && !loading && (
-              <Empty description="Все места забронированны" />
+              <Empty description="Данные отсутствуют" />
             )}
           </div>
         </div>

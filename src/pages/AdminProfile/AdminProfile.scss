@@ -9,9 +9,32 @@
 }
 
 .adminProfile {
+  &__input {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  &__btn {
+    max-width: 200px;
+    width: 100%;
+    height: 35px;
+    margin-top: 20px;
+  }
+
+  &__exit {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+
+    width: 30px;
+    height: 30px;
+
+    background-color: transparent;
+    border: none;
+  }
 }
 
-.back {
+.back__wrapper {
   position: absolute;
   top: 30px;
   left: 30px;

@@ -15,12 +15,32 @@
 
   &__card {
     max-width: 350px;
+    width: 100%;
+
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      box-shadow: 1px 1px 9px 2px rgb(0 0 0 / 22%);
+    }
   }
 
   &__card-img {
     width: 300px;
     height: 200px;
     object-fit: cover;
+  }
+
+  &__card-remove {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    width: 20px;
+    height: 20px;
+
+    border: none;
+    background-color: transparent;
   }
 
   &__card-inner {

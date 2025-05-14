@@ -6,17 +6,17 @@ import { setFile } from "../../utils/setFile";
 import service from "../../api/service";
 import { formatDate } from "../../utils/formatDate";
 
-const Place = ({ place, places, setPlaces, footerShown }) => {
-  const { bookPlace } = service();
+const Place = ({ place, places, setPlaces, footerShown, user }) => {
+  const { bookPlace, removePlace } = service();
   const [messageApi, contextHolder] = message.useMessage();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [value, setValue] = useState(1);
 
-  const success = () => {
+  const success = (message = "Помещение усешно забронированно") => {
     messageApi.open({
       type: "success",
-      content: "Помещение усешно забронированно",
+      content: message,
     });
   };
 
@@ -44,10 +44,46 @@ const Place = ({ place, places, setPlaces, footerShown }) => {
 
   const setRoute = () => {
     setSearchParams(`?endAddress=${place.location}`);
+    window.scrollTo({ top: 0 });
+  };
+
+  const remove = () => {
+    removePlace(place.id)
+      .then((res) => {
+        let newArr = places.filter((el) => el.id !== place.id);
+        setPlaces(newArr);
+        success("Помещение удалено");
+      })
+      .catch((e) => {
+        error();
+      });
   };
 
   return (
-    <Card className="main__card" onClick={setRoute}>
+    <Card
+      className="main__card"
+      style={{
+        paddingTop: user?.role === "ADMIN" ? "20px" : "0px",
+      }}
+      onClick={setRoute}
+    >
+      {user?.role === "ADMIN" && (
+        <Popconfirm
+          title="Вы уверенны?"
+          description="Это помещение будет безвозвратно удалено"
+          okText="Да"
+          cancelText="Нет"
+          onConfirm={remove}
+        >
+          <button className="main__card-remove">
+            <img
+              src="https://img.icons8.com/?size=100&id=68138&format=png&color=C40505"
+              alt=""
+            />
+          </button>
+        </Popconfirm>
+      )}
+
       {contextHolder}
       <img className="main__card-img" src={setFile(place.image)} alt="" />
       <span className="main__card-title">{place.name}</span>
