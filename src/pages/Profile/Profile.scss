@@ -1,0 +1,31 @@
+.profile {
+  padding: 20px 60px;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: 20px 0 40px 0;
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+
+  &__inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 15px;
+  }
+
+  &__exit {
+    width: 30px;
+    height: 30px;
+
+    border: none;
+    background-color: transparent;
+  }
+}

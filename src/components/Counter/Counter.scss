@@ -1,0 +1,32 @@
+.counter {
+  // .counter__inner
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    gap: 0 10px;
+  }
+
+  // .counter__btn
+
+  &__btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+
+    border: none;
+
+    font-weight: 300;
+    font-size: 20px;
+  }
+
+  // .counter__value
+
+  &__value {
+    max-width: 25px;
+    width: 100%;
+    width: fit-content;
+    border: none;
+    text-align: center;
+  }
+}

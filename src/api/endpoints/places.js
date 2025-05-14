@@ -1,11 +1,19 @@
 import api from "../api";
 
 const places = () => {
-  const getAll = async () => {
-    return await api.get("/places");
+  const getAllPlaces = async ({ location }) => {
+    return await api.get(`/places?location=${location || ""}`);
   };
 
-  return { getAll };
+  const getMyPlaces = async () => {
+    return await api.get("/places/my");
+  };
+
+  const bookPlace = async ({ placeId, days }) => {
+    return await api.post("/places/book", { placeId, days });
+  };
+
+  return { getAllPlaces, bookPlace, getMyPlaces };
 };
 
 export default places;

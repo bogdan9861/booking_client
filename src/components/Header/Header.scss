@@ -1,0 +1,28 @@
+.header {
+  padding: 20px 60px;
+
+  // .header__inner
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  // .header__search
+
+  &__search {
+    max-width: 400px;
+  }
+
+  // .header__profile
+
+  &__profile {
+  }
+
+  &__profile-link {
+    display: flex;
+    align-items: center;
+    gap: 0 10px;
+  }
+}
